@@ -14,6 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: k8s-backend
+          image: backend
+          imagePullPolicy: Never
           ports:
             - containerPort: 3001
