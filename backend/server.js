@@ -1,17 +1,17 @@
-const express = require('express');
-const client = require('prom-client'); // Prometheus client
+import express from 'express';
+import { Registry, collectDefaultMetrics, Counter } from 'prom-client';
 
 const app = express();
 const PORT = 3001;
 
 // Create a Registry to register the metrics
-const register = new client.Registry();
+const register = new Registry();
 
-// Optional: Collect default metrics like CPU, memory, etc.
-client.collectDefaultMetrics({ register });
+// Collect default metrics like CPU, memory, etc.
+collectDefaultMetrics({ register });
 
 // Custom metric example
-const httpRequestsCounter = new client.Counter({
+const httpRequestsCounter = new Counter({
   name: 'http_requests_total',
   help: 'Total number of HTTP requests received',
 });
@@ -29,7 +29,7 @@ app.get('/api', (req, res) => {
   res.send('📦 Backend API running');
 });
 
-// Route: /metrics (used by Prometheus)
+// Route: /metrics
 app.get('/metrics', async (req, res) => {
   res.set('Content-Type', register.contentType);
   res.end(await register.metrics());
