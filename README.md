@@ -71,6 +71,61 @@ kubectl get services
 minikube service frontend
 minikube service backend
 
+🔧 Step 12: Monitoring Setup (Prometheus + Grafana)
+
+📦 Prometheus Setup
+
+1. Configured prometheus.yml using a ConfigMap with targets.
+
+2. Applied Prometheus manifest using:
+
+    kubectl apply -f prometheus/
+
+3. Exposed Prometheus via:
+
+    minikube service prometheus
+
+4. Verified backend /metrics was live on port 3001
+
+📦 Backend Metrics Setup
+
+    Used express and prom-client in backend/server.js
+
+    Exported http_requests_total and default metrics at /metrics
+
+    Ensured backend responds correctly to /metrics
+
+📉 Grafana Setup
+
+1. Installed Grafana via Kubernetes manifest
+
+2. Exposed Grafana via:
+
+    minikube service grafana
+
+3. Logged in with default credentials:
+
+    Username: admin
+
+    Password: admin
+
+4. Added Prometheus as a data source:
+
+    URL: http://prometheus:9090
+
+
+✅ Project : This project now demonstrates:
+
+Dockerized microservices
+
+Kubernetes orchestration via Minikube
+
+Observability with Prometheus & Grafana
+
+Local development without cloud dependency
+
+
+
 🧼 Bonus Commands
 
 # Stop the cluster
